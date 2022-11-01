@@ -12,9 +12,8 @@ class AppLogger
     private $logger;
 
     /*
-     * 适配器
-     *
-     * //定义接口
+     ### 适配器
+      //定义接口
       interface CustomLog
       {
         function info();
@@ -36,7 +35,18 @@ class AppLogger
          }
        }
        $appLogger = new AppLogger(new thinkLog());
-      */
+
+      ###也可以仿照laravel容器实现
+
+
+      #### 内容转大写
+        1 可以加判断 或者 直接传个是否转换参数
+            if($this->logger instanceof think-log){
+                $message = strtoupper($message)  ;
+            }
+        2 在外部调用的时候转换
+        3 具体实现类,各自定义逻辑
+    */
 
     public function __construct($type = self::TYPE_LOG4PHP)
     {
@@ -46,18 +56,13 @@ class AppLogger
         if ($type == self::TYPE_LOG4PHP) {
             $this->logger = \Logger::getLogger("Log");
         } elseif ($type == self::TYPE_THINK) {
-           // $this->logger = new Log();
+            // $this->logger = new Log();
 
         }
     }
 
     public function info($message = '')
     {
-        //内容转大写可以判断 ，或者在外部调用的时候已经转换完毕
-        // if($this->logger instanceof 'think-log'){
-        //    $message = strtoupper($message)  ;
-        //}
-
         $this->logger->info($message);
     }
 
